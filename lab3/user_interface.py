@@ -1,4 +1,5 @@
-from db.auth import create_user, is_unique_username
+from db.auth import create_user, is_unique_username, verify_password
+
 
 def sign_up():
     print('Sign up form')
@@ -41,6 +42,20 @@ def sign_up():
     print('User signed up successfully')    
 
 
+def sign_in():
+    print('Sign up form')
+    print('= ' * 20)
+
+    # Get username      
+    while True: 
+        username = input('Username: ')
+        password = input('Password: ')
+        if try_sign_in(username, password):
+            print('User signed in successfully')
+            return
+        print('User could not be signed in\n')
+
+
 def is_valid_username(username: str):
     if len(username) < 6:
         raise ValueError('Username must be at least 6 characters long')
@@ -55,4 +70,8 @@ def is_valid_password(password: str):
         raise ValueError('Password must be at least 12 characters long')
     if len(password) > 1024:
         raise ValueError('Password must be at most 1024 characters long')
+    
+
+def try_sign_in(username: str, password: str):
+    return verify_password(username, password)
     
