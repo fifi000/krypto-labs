@@ -19,7 +19,14 @@ public_key = None
 
 
 @router.get("/key")
-def generate_asymmetric_key():
+def generate_asymmetric_key() -> dict:
+    """
+    Generates a new asymmetric key pair (private and public keys) using RSA algorithm.
+    Sets the global `private_key` and `public_key` variables with the newly generated keys.
+
+    Returns:
+        dict: A dictionary with the private key and public key in PEM format.
+    """
     global private_key, public_key
     private_key = rsa.generate_private_key(
         public_exponent=65537,
@@ -39,7 +46,16 @@ def generate_asymmetric_key():
 
 
 @router.post("/key")
-def set_asymmetric_key(key: AsymmetricKey):
+def set_asymmetric_key(key: AsymmetricKey) -> dict:
+    """
+    Sets the asymmetric keys with provided keys from the request.
+
+    Args:
+        key (AsymmetricKey): An object containing the private and public keys in PEM format.
+
+    Returns:
+        dict: A confirmation that the asymmetric key has been set.
+    """
     global private_key, public_key
     private_key = serialization.load_pem_private_key(
         key.private_key.encode(),
@@ -52,7 +68,19 @@ def set_asymmetric_key(key: AsymmetricKey):
 
 
 @router.post("/sign")
-def sign_message(message: Message):
+def sign_message(message: Message) -> dict:
+    """
+    Signs a message using the private key stored in the global variable.
+
+    Args:
+        message (Message): An object containing the message to be signed.
+
+    Returns:
+        dict: A dictionary containing the base64 encoded signature of the message.
+
+    Raises:
+        HTTPException: If no private key has been set.
+    """
     global private_key
     if private_key is None:
         raise HTTPException(status_code=400, detail="No private key set.")
@@ -68,7 +96,19 @@ def sign_message(message: Message):
 
 
 @router.post("/verify")
-def verify_message(message: Message):
+def verify_message(message: Message) -> dict:
+    """
+    Verifies the signature of a message using the stored public key.
+
+    Args:
+        message (Message): An object containing the message and its signature.
+
+    Returns:
+        dict: A confirmation message indicating whether the signature is valid or not.
+
+    Raises:
+        HTTPException: If no public key has been set or if the signature is invalid.
+    """
     global public_key
     if public_key is None:
         raise HTTPException(status_code=400, detail="No public key set.")
