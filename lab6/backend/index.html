@@ -8,14 +8,12 @@
 </head>
 <body>
     <script>
-        function mineBlock() {
-            let response = await fetch('http://localhost:5000/mine')
-                .then(response => response.json())
-            alert(response)
+        async function mineBlock() {
+            let response = await fetch('http://localhost:5000/mine').then(response => response.json());
+            alert(response);
         }
 
-        /*
-        function createTransaction(){
+        async function createTransaction() {
             sender = Element('sender').element.value
             recipient = Element('recipient').element.value
             amount = Element('amount').element.value
@@ -28,48 +26,58 @@
             alert(response.json()['message'])
         }
 
-        function viewChain() {
+        async function viewChain() {
             response = requests.get('http://localhost:5000/chain')
             Element('blockchain-view').element.innerText = response.text
         }
-        */
     </script>
 
-    <div class="container">
-        <h1 class="mt-5 mb-3">Blockchain Interface</h1>
+    <div class="container mt-3">
 
         <!-- Profile Block -->
         <div class="card mb-3">
             <div class="card-body">
-                <p id="money">0</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <img src="https://www.gimpuj.info/gallery/75398_17_11_12_12_01_56_0.png" alt="Tytus Bomba" height="64"/>
+                        <label class="form-label">Tytus Bomba</label>
+                    </div>
+                    <div>
+                        <label class="form-label">50 Kurwinox Coinów</label>
+                        <button onclick="mineBlock()" class="btn btn-outline-primary mx-5">
+                            <img src="https://data2.cupsell.pl/upload/generator/84002/640x420/1016109_print-trimmed-1.png" alt="Pickaxe" height="32"/>
+                        </button>
+                    </div>
+                </div>        
             </div>
         </div>
 
-        <!-- Mining Block -->
+        <!-- Contacts -->
         <div class="card mb-3">
             <div class="card-body">
-                <h5 class="card-title">Mine a Block</h5>
-                <button onclick="mineBlock()" class="btn btn-primary">Mine</button>
+                <h5 class="card-title">Contacts</h5>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <img src="https://samequizy.pl/wp-content/uploads/2021/01/images_27eabf0fa170.jpeg" alt="Chorąży Torpeda" height="64"/>
+                        <label class="form-label">Chorąży Torpeda</label>
+                    </div>
+                    <div>
+                        <input type="number"/>
+                        <button onclick="createTransaction()" class="btn btn-success">Send</button>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <!-- New Transaction -->
-        <div class="card mb-3">
             <div class="card-body">
-                <h5 class="card-title">New Transaction</h5>
-                <div class="mb-3">
-                    <label class="form-label">Sender</label>
-                    <input type="text" id="sender" class="form-control">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Recipient</label>
-                    <input type="text" id="recipient" class="form-control">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Amount</label>
-                    <input type="number" id="amount" class="form-control">
-                </div>
-                <button onclick="createTransaction()" class="btn btn-success">Submit</button>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5NeYs8QFuyG2SyoLbJAecqiMFbDOTfaboOnKu2-gNMg&s" alt="Greg lepkie rączki" height="64"/>
+                        <label class="form-label">Greg lepkie rączki</label>
+                    </div>
+                    <div>
+                        <input type="number"/>
+                        <button onclick="createTransaction()" class="btn btn-success">Send</button>
+                    </div>
+                </div>    
             </div>
         </div>
 
